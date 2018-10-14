@@ -2,11 +2,12 @@ import React from 'react';
 import expect from 'expect';
 import reducer from './reducer';
 import { Provider } from 'react-redux'
-import { configure, mount } from 'enzyme';
+import { configure, mount, shallow } from 'enzyme';
 import store from '../store'
 import Adapter from 'enzyme-adapter-react-16';
 
 import Search from './containers/Search'
+import SearchResultItem from './components/SearchResultItem'
 
 const { fromJS } = require('immutable');
 
@@ -37,7 +38,7 @@ it ('has an initial state', () =>  {
 
 });
 
-it ('The Search component displays some results', () => {
+it ('displays some results', () => {
 
     let wrapper = mount(
         <Provider store={store}>
@@ -45,5 +46,14 @@ it ('The Search component displays some results', () => {
         </Provider>
     );
     expect(wrapper.find('SearchResultItem').length).toBe(3);
+
+});
+
+it ('displays the right information in a result item', () => {
+
+    let wrapper = shallow(<SearchResultItem name={'Late Rooms'} starRating={5} facilities={['car park', 'pool']} />);
+    expect(wrapper.find('.name').length).toBe(1);
+    expect(wrapper.find('<StarRating/>').length).toBe(1);
+    expect(wrapper.find('<Facility/>').length).toBe(2);
 
 });
