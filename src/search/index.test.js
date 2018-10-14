@@ -7,6 +7,7 @@ import store from '../store'
 import Adapter from 'enzyme-adapter-react-16';
 
 import Search from './containers/Search'
+import { default as SearchComponent } from './components/Search'
 import SearchResultItem from './components/SearchResultItem'
 import StarRating from './components/StarRating'
 import Facility from './components/Facility'
@@ -76,4 +77,9 @@ it ('displays the right star rating (3)', () => {
 it ('displays the right facility name', () => {
     let wrapper = shallow(<Facility name={'car park'} />);
     expect(wrapper.text()).toBe('car park');
+});
+
+it ('has a search facilities filter field', () => {
+    let wrapper = shallow(<SearchComponent />);
+    expect(wrapper.find('.facilities-search').exists()).toBe(true);
 });
