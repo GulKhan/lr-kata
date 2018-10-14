@@ -10,7 +10,13 @@ class Search extends React.Component {
                 <h2>Hotel Search</h2>
 
                 <label htmlFor={'facilities-search'}>
-                    <input id='facilities-search' type={'text'} placeholder={'Search for facilities...'} />
+                    <input
+                        id='facilities-search'
+                        type={'text'}
+                        placeholder={'Search for facilities...'}
+                        onChange={(event) => { this.props.searchPhraseChanged(event.target.value) }}
+                        value={this.props.searchPhrase}
+                    />
                 </label>
 
                 {this.props.results && this.props.results.map((result, i) =>
@@ -21,8 +27,13 @@ class Search extends React.Component {
     }
 }
 
+Search.defaultProps = {
+    searchPhrase: ''
+};
 Search.propTypes = {
-    results: PropTypes.array.isRequired
+    results: PropTypes.array.isRequired,
+    searchPhrase: PropTypes.string,
+    searchPhraseChanged: PropTypes.func.isRequired
 }
 
 export default Search;

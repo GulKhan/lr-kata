@@ -1,9 +1,10 @@
 import React from 'react';
 import expect from 'expect';
-import reducer from './reducer';
+import reducer, { initialState } from './reducer';
 import { Provider } from 'react-redux'
 import { configure, mount, shallow } from 'enzyme';
 import store from '../store'
+import { SEARCH_PHRASE_CHANGED, SEARCH_RESULTS_REFRESH } from './actions'
 import Adapter from 'enzyme-adapter-react-16';
 
 import Search from './containers/Search'
@@ -18,26 +19,24 @@ configure({ adapter: new Adapter() });
 
 it ('has an initial state', () =>  {
 
-    expect(reducer(undefined, {})).toEqual(fromJS({
-        results: [
-            {
-                "name": "hotelone",
-                "starRating": 5,
-                "facilities": ["car park", "pool"]
-            },
-            {
-                "name": "hoteltwo",
-                "starRating": 3,
-                "facilities": ["car park", "gym"]
-            },
-            {
-                "name": "hotelthree",
-                "starRating": 3,
-                "facilities": []
-            }
-
-        ]
-    }));
+    let state = reducer(undefined, {});
+    expect(state.get('results')).toEqual(fromJS([
+        {
+            "name": "hotelone",
+            "starRating": 5,
+            "facilities": ["car park", "pool"]
+        },
+        {
+            "name": "hoteltwo",
+            "starRating": 3,
+            "facilities": ["car park", "gym"]
+        },
+        {
+            "name": "hotelthree",
+            "starRating": 3,
+            "facilities": []
+        }
+    ]));
 
 });
 
@@ -80,9 +79,32 @@ it ('displays the right facility name', () => {
 });
 
 it ('has a search facilities filter field', () => {
-    let wrapper = shallow(<SearchComponent results={[]}/>);
+    let wrapper = shallow(<SearchComponent results={[]} searchPhraseChanged={() => {}}/>);
     expect(wrapper.find('#facilities-search').exists()).toBe(true);
 });
+
+it ('can filter the results using searchPhraseChanged action', () => {
+    const updateAction = {
+        type: SEARCH_PHRASE_CHANGED,
+        searchPhrase: 'car park'
+    };
+    let state = reducer(initialState, updateAction);
+    expect(state.get('searchPhrase')).toEqual('car park');
+})
+
+it ('can filter the results using searchPhraseChanged action', () => {
+    const searchPhraseRefreshAction = {
+        type: SEARCH_PHRASE_CHANGED,
+        searchPhrase: 'car'
+    };
+    const searchResultsRefreshAction = {
+        type: SEARCH_RESULTS_REFRESH
+    };
+    let state = reducer(initialState, searchPhraseRefreshAction);
+    state = reducer(state, searchResultsRefreshAction);
+    expect(state.get('results').toJS().length).toEqual(2);
+})
+
 it ('can filter the results using the filter input field', () => {
 
     let wrapper = mount(
