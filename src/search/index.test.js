@@ -70,7 +70,7 @@ it ('displays the right star rating (0)', () => {
 });
 it ('displays the right star rating (3)', () => {
     let wrapper = shallow(<StarRating starRating={3} />);
-    expect(wrapper.find('.star').length).toBe(0);
+    expect(wrapper.find('.star').length).toBe(3);
 });
 
 it ('displays the right facility name', () => {

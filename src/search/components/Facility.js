@@ -6,7 +6,7 @@ class Facility extends React.Component {
     render() {
         return (
             <div className={'Facility'}>
-                Facility
+                {this.props.name}
             </div>
         )
     }

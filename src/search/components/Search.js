@@ -7,9 +7,9 @@ class Search extends React.Component {
     render() {
         return (
             <div className={'Search'}>
-
+                <h2>Hotel Search</h2>
                 {this.props.results && this.props.results.map((result, i) =>
-                    <SearchResultsItem key={i}/>
+                    <SearchResultsItem key={i} {...result}/>
                 )}
             </div>
         )

@@ -6,15 +6,23 @@ class StarRating extends React.Component {
     render() {
         return (
             <div className={'StarRating'}>
-                <div className={'star'}/>
-                <div className={'star'}/>
-                <div className={'star'}/>
-                <div className={'star'}/>
-                <div className={'star'}/>
+                {this.props.starRating &&
+                    this.renderStars(this.props.starRating)
+                }
             </div>
         )
     }
+
+    renderStars(numStars) {
+        let stars = [];
+        for (let i = 0; i < numStars; i++) {
+            stars.push(<img key={i} className={'star'} src={'/images/star.png'} />);
+        }
+        return stars;
+    }
 }
+
+
 
 StarRating.propTypes = {
     starRating: PropTypes.number.isRequired
