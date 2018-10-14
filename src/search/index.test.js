@@ -117,3 +117,14 @@ it ('can filter the results using the filter input field', () => {
     expect(wrapper.find('SearchResultItem').length).toBe(2);
 
 });
+
+it ('has a star rating filter field', () => {
+    let wrapper = shallow(<SearchComponent results={[]} searchPhraseChanged={() => {}}/>);
+    expect(wrapper.find('#sort-results').exists()).toBe(true);
+});
+it ('has a star rating filter field with ascending and descending options', () => {
+    let wrapper = shallow(<SearchComponent results={[]} searchPhraseChanged={() => {}}/>);
+    let sort = wrapper.find('#sort-results');
+    expect(sort.find('option[value="star-rating-asc"]').exists()).toBe(true);
+    expect(sort.find('option[value="star-rating-desc"]').exists()).toBe(true);
+});
