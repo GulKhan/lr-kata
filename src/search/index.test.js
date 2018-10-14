@@ -1,7 +1,16 @@
 import React from 'react';
 import expect from 'expect';
 import reducer from './reducer';
+import { Provider } from 'react-redux'
+import { configure, mount } from 'enzyme';
+import store from '../store'
+import Adapter from 'enzyme-adapter-react-16';
+
+import Search from './components/Search'
+
 const { fromJS } = require('immutable');
+
+configure({ adapter: new Adapter() });
 
 it ('has an initial state', () =>  {
 
@@ -25,5 +34,16 @@ it ('has an initial state', () =>  {
 
         ]
     }));
+
+});
+
+it ('The Search component displays some results', () => {
+
+    let wrapper = mount(
+        <Provider store={store}>
+            <Search />
+        </Provider>
+    );
+    expect(wrapper.find('SearchResultItem').length).toBe(3);
 
 });
