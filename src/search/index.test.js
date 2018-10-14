@@ -6,7 +6,7 @@ import { configure, mount } from 'enzyme';
 import store from '../store'
 import Adapter from 'enzyme-adapter-react-16';
 
-import Search from './components/Search'
+import Search from './containers/Search'
 
 const { fromJS } = require('immutable');
 

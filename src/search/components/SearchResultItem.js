@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 const SearchResultItem = () => (
-    <p>Search Result Item</p>
+    <div className={'SearchResultsItem'}>Search Result</div>
 )
+
 
 export default SearchResultItem;
