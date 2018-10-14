@@ -10,6 +10,7 @@ class Search extends React.Component {
                 <h2>Hotel Search</h2>
 
                 <label htmlFor={'facilities-search'}>
+                    <span>Search: </span>
                     <input
                         id='facilities-search'
                         type={'text'}
@@ -17,6 +18,16 @@ class Search extends React.Component {
                         onChange={(event) => { this.props.searchPhraseChanged(event.target.value) }}
                         value={this.props.searchPhrase}
                     />
+                </label>
+
+                <label htmlFor={'sort-results'}>
+                    <span>Sort: </span>
+                    <select
+                        id='sort-results'
+                    >
+                        <option value={'star-rating-asc'}>Star Rating (Ascending)</option>
+                        <option value={'star-rating-desc'}>Star Rating (Descending)</option>
+                    </select>
                 </label>
 
                 {this.props.results && this.props.results.map((result, i) =>
