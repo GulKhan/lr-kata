@@ -24,6 +24,8 @@ class Search extends React.Component {
                     <span>Sort: </span>
                     <select
                         id='sort-results'
+                        onChange={(event) => this.props.sortOptionChanged(event.target.value)}
+                        value={this.props.sortOption}
                     >
                         <option value={'star-rating-asc'}>Star Rating (Ascending)</option>
                         <option value={'star-rating-desc'}>Star Rating (Descending)</option>
@@ -39,12 +41,15 @@ class Search extends React.Component {
 }
 
 Search.defaultProps = {
-    searchPhrase: ''
+    searchPhrase: '',
+    sortOption: 'star-rating-desc'
 };
 Search.propTypes = {
     results: PropTypes.array.isRequired,
     searchPhrase: PropTypes.string,
-    searchPhraseChanged: PropTypes.func.isRequired
+    searchPhraseChanged: PropTypes.func.isRequired,
+    sortOption: PropTypes.string,
+    sortOptionChanged: PropTypes.func.isRequired
 }
 
 export default Search;

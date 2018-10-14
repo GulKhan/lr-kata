@@ -4,7 +4,7 @@ import reducer, { initialState } from './reducer';
 import { Provider } from 'react-redux'
 import { configure, mount, shallow } from 'enzyme';
 import store from '../store'
-import { SEARCH_PHRASE_CHANGED, SEARCH_RESULTS_REFRESH } from './actions'
+import { SEARCH_PHRASE_CHANGED, SEARCH_RESULTS_REFRESH, SORT_OPTION_CHANGED } from './actions'
 import Adapter from 'enzyme-adapter-react-16';
 
 import Search from './containers/Search'
@@ -79,7 +79,7 @@ it ('displays the right facility name', () => {
 });
 
 it ('has a search facilities filter field', () => {
-    let wrapper = shallow(<SearchComponent results={[]} searchPhraseChanged={() => {}}/>);
+    let wrapper = shallow(<SearchComponent results={[]} searchPhraseChanged={() => {}} sortOptionChanged={() => {}}/>);
     expect(wrapper.find('#facilities-search').exists()).toBe(true);
 });
 
@@ -90,7 +90,7 @@ it ('can filter the results using searchPhraseChanged action', () => {
     };
     let state = reducer(initialState, updateAction);
     expect(state.get('searchPhrase')).toEqual('car park');
-})
+});
 
 it ('can filter the results using searchPhraseChanged action', () => {
     const searchPhraseRefreshAction = {
@@ -118,13 +118,43 @@ it ('can filter the results using the filter input field', () => {
 
 });
 
+it ('can clear the search filter field and show all results', () => {
+
+    let wrapper = mount(
+        <Provider store={store}>
+            <Search />
+        </Provider>
+    );
+    wrapper.find('#facilities-search').simulate('focus');
+    wrapper.find('#facilities-search').simulate('change', { target: { value: '' } });
+    expect(wrapper.find('SearchResultItem').length).toBe(3);
+
+});
+
 it ('has a star rating filter field', () => {
-    let wrapper = shallow(<SearchComponent results={[]} searchPhraseChanged={() => {}}/>);
+    let wrapper = shallow(<SearchComponent results={[]} searchPhraseChanged={() => {}} sortOptionChanged={() => {}}/>);
     expect(wrapper.find('#sort-results').exists()).toBe(true);
 });
 it ('has a star rating filter field with ascending and descending options', () => {
-    let wrapper = shallow(<SearchComponent results={[]} searchPhraseChanged={() => {}}/>);
+    let wrapper = shallow(<SearchComponent results={[]} searchPhraseChanged={() => {}} sortOptionChanged={() => {}} />);
     let sort = wrapper.find('#sort-results');
     expect(sort.find('option[value="star-rating-asc"]').exists()).toBe(true);
     expect(sort.find('option[value="star-rating-desc"]').exists()).toBe(true);
+});
+
+it ('can sort the results using sortOptionChanged ascending action', () => {
+    const sortOptionsChangedAction = {
+        type: SORT_OPTION_CHANGED,
+        value: 'star-rating-asc'
+    };
+    let state = reducer(initialState, sortOptionsChangedAction);
+    expect(state.getIn(['results', 0, 'starRating'])).toEqual(3);
+});
+it ('can sort the results using sortOptionChanged descending action', () => {
+    const sortOptionsChangedAction = {
+        type: SORT_OPTION_CHANGED,
+        value: 'star-rating-desc'
+    };
+    let state = reducer(initialState, sortOptionsChangedAction);
+    expect(state.getIn(['results', 0, 'starRating'])).toEqual(5);
 });

@@ -26,6 +26,6 @@ class StarRating extends React.Component {
 
 StarRating.propTypes = {
     starRating: PropTypes.number.isRequired
-}
+};
 
 export default StarRating;
