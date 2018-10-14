@@ -8,6 +8,11 @@ class Search extends React.Component {
         return (
             <div className={'Search'}>
                 <h2>Hotel Search</h2>
+
+                <label htmlFor={'facilities-search'}>
+                    <input id='facilities-search' type={'text'} placeholder={'Search for facilities...'} />
+                </label>
+
                 {this.props.results && this.props.results.map((result, i) =>
                     <SearchResultsItem key={i} {...result}/>
                 )}

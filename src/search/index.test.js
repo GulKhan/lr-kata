@@ -80,6 +80,6 @@ it ('displays the right facility name', () => {
 });
 
 it ('has a search facilities filter field', () => {
-    let wrapper = shallow(<SearchComponent />);
-    expect(wrapper.find('.facilities-search').exists()).toBe(true);
+    let wrapper = shallow(<SearchComponent results={[]}/>);
+    expect(wrapper.find('#facilities-search').exists()).toBe(true);
 });
