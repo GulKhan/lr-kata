@@ -83,3 +83,15 @@ it ('has a search facilities filter field', () => {
     let wrapper = shallow(<SearchComponent results={[]}/>);
     expect(wrapper.find('#facilities-search').exists()).toBe(true);
 });
+it ('can filter the results using the filter input field', () => {
+
+    let wrapper = mount(
+        <Provider store={store}>
+            <Search />
+        </Provider>
+    );
+    wrapper.find('#facilities-search').simulate('focus');
+    wrapper.find('#facilities-search').simulate('change', { target: { value: 'car park' } });
+    expect(wrapper.find('SearchResultItem').length).toBe(2);
+
+});
