@@ -16,7 +16,7 @@ class StarRating extends React.Component {
     renderStars(numStars) {
         let stars = [];
         for (let i = 0; i < numStars; i++) {
-            stars.push(<img key={i} className={'star'} src={'/images/star.png'} />);
+            stars.push(<img key={i} className={'star'} src={'/images/star.png'} alt={'star'}/>);
         }
         return stars;
     }
